@@ -1,0 +1,16 @@
+services:
+  vehicle-plates:
+    build: .
+    image: vehicle-plates-detection-reading:latest
+    container_name: vehicle-plates-detection-reading
+    volumes:
+      - ./:/app                  # input video, model checkpoint and outputs shared with host
+      - torch-cache:/root/.cache # cache downloaded model weights between runs
+    # cv2.imshow window only works on Linux + X11. Leave disabled on macOS/Windows;
+    # the script still writes the annotated output video to the project folder.
+    # environment:
+    #   - DISPLAY=${DISPLAY}
+    # Add "- /tmp/.X11-unix:/tmp/.X11-unix" to the volumes above to enable X11.
+
+volumes:
+  torch-cache:
